@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  SITE_URL: ${{ vars.SITE_URL }}
+  SITE_URL: ${{ vars.SITE_URL || 'https://example.com' }}
 
 jobs:
   build:
@@ -23,14 +23,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
-
-      - name: Validate public site URL
-        shell: bash
-        run: |
-          if [[ ! "$SITE_URL" =~ ^https:// ]]; then
-            echo "::error::Set the repository variable SITE_URL to the final HTTPS address."
-            exit 1
-          fi
 
       - name: Install, verify, build, and upload
         uses: withastro/action@v6
@@ -40,7 +32,7 @@ jobs:
           build-cmd: pnpm verify
 
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.SITE_URL != ''
     needs: build
     runs-on: ubuntu-latest
     permissions:

@@ -101,12 +101,13 @@ Die Website wird über `.github/workflows/deploy.yml` geprüft und bei GitHub Pa
 Pull Requests werden vollständig gebaut, aber nicht veröffentlicht. Ein Push auf `main` startet
 Prüfung und Deployment.
 
-Vor dem ersten Lauf muss im GitHub Repository unter
+Ohne weitere Konfiguration führt der Workflow alle Prüfungen aus und überspringt das Deployment.
+Zum Veröffentlichen wird im GitHub Repository unter
 `Settings > Secrets and variables > Actions > Variables` die öffentliche Variable `SITE_URL`
-angelegt werden. Ihr Wert ist die endgültige HTTPS Adresse, zum Beispiel
-`https://chasantravels.de`. Die Adresse ist öffentlich und gehört deshalb nicht in die Secrets.
+angelegt. Ihr Wert ist die endgültige HTTPS Adresse, zum Beispiel `https://chasantravels.de`. Die
+Adresse ist öffentlich und gehört deshalb nicht in die Secrets. Nach dem Eintragen veröffentlicht
+der nächste Push auf `main` oder eine manuelle Ausführung des Workflows die Website.
 
 Anschließend wird unter `Settings > Pages` als Quelle `GitHub Actions` gewählt. Eine eigene Domain
-wird dort zusätzlich unter `Custom domain` eingetragen. Solange keine endgültige Root Domain
-feststeht, sollte der Workflow nicht manuell ausgeführt werden, da dieses Projekt bewusst keinen
-GitHub Repository Basispfad verwendet.
+wird dort zusätzlich unter `Custom domain` eingetragen. Dieses Projekt verwendet bewusst keinen
+GitHub Repository Basispfad und erwartet für das Deployment deshalb eine endgültige Root Domain.
