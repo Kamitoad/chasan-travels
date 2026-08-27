@@ -1,20 +1,26 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
+import { type CollectionEntry, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { getVisiblePosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
+	const posts = await getVisiblePosts();
+	return posts.map((post, index) => ({
 		params: { slug: post.id },
-		props: post,
+		props: { post, entryNumber: index + 1 },
 	}));
 }
-type Props = CollectionEntry<'blog'>;
+interface Props {
+	post: CollectionEntry<'blog'>;
+	entryNumber: number;
+}
 
-const post = Astro.props;
+const { post, entryNumber } = Astro.props;
 const { Content } = await render(post);
+const wordCount = (post.body ?? '').trim().split(/\s+/).filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.ceil(wordCount / 220));
 ---
 
-<BlogPost {...post.data}>
+<BlogPost {...post.data} entryNumber={entryNumber} readingMinutes={readingMinutes}>
 	<Content />
 </BlogPost>

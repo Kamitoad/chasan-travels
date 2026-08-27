@@ -1,0 +1,111 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	index: number;
+}
+
+const { post, index } = Astro.props;
+const entryNumber = String(index + 1).padStart(2, '0');
+---
+
+<article class="post-preview">
+	<p class="number" aria-hidden="true">{entryNumber}</p>
+	<div class="meta">
+		<FormattedDate date={post.data.pubDate} />
+		{post.data.location && <span>{post.data.location}</span>}
+		{post.data.draft && <span class="draft">Entwurf</span>}
+	</div>
+	<div class="story">
+		<h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+		<p>{post.data.description}</p>
+	</div>
+	<a class="read-link" href={`/blog/${post.id}/`} aria-label={`„${post.data.title}“ lesen`}>
+		Lesen <span aria-hidden="true">↗</span>
+	</a>
+</article>
+
+<style>
+	.post-preview {
+		display: grid;
+		grid-template-columns: 3.5rem minmax(8.5rem, 0.65fr) minmax(16rem, 2fr) auto;
+		align-items: start;
+		gap: clamp(1rem, 3vw, 2.5rem);
+		border-top: 1px solid var(--color-border);
+		padding-block: 1.5rem 1.75rem;
+	}
+	.number,
+	.meta,
+	.read-link {
+		font-family: var(--font-meta);
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+	.number {
+		margin: 0;
+		color: var(--color-accent-dark);
+		font-weight: 700;
+	}
+	.meta {
+		display: grid;
+		gap: 0.25rem;
+		color: var(--color-text-muted);
+		line-height: 1.5;
+	}
+	.draft {
+		width: fit-content;
+		border-bottom: 2px solid var(--color-accent);
+		color: var(--color-accent-dark);
+		font-weight: 700;
+	}
+	h2 {
+		font-size: clamp(1.6rem, 3vw, 2.35rem);
+	}
+	h2 a {
+		color: var(--color-text);
+		text-decoration: none;
+	}
+	h2 a:hover {
+		color: var(--color-accent-dark);
+	}
+	.story p {
+		max-width: 38rem;
+		margin: 0.6rem 0 0;
+		color: var(--color-text-muted);
+		line-height: 1.55;
+	}
+	.read-link {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+		color: var(--color-accent-dark);
+		font-weight: 700;
+		white-space: nowrap;
+	}
+	@media (max-width: 760px) {
+		.post-preview {
+			grid-template-columns: 2.25rem 1fr auto;
+		}
+		.meta {
+			grid-column: 2;
+		}
+		.story {
+			grid-column: 2 / -1;
+		}
+		.read-link {
+			grid-column: 2;
+		}
+	}
+	@media (max-width: 430px) {
+		.post-preview {
+			grid-template-columns: 1.75rem 1fr;
+			gap: 0.75rem 1rem;
+		}
+		.read-link {
+			grid-column: 2;
+		}
+	}
+</style>

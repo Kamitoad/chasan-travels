@@ -1,49 +1,373 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { Image } from 'astro:assets';
+import vancouverHarbour from '../assets/photos/vancouver-harbour.jpg';
+import PostPreview from '../components/PostPreview.astro';
+import { CURRENT_CHAPTER, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getVisiblePosts } from '../lib/posts';
+
+const posts = await getVisiblePosts();
+const latestPost = posts[0];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} image={vancouverHarbour}>
+	<main id="main-content">
+		<figure class="cover">
+			<Image
+				class="cover-image"
+				src={vancouverHarbour}
+				alt="Coal Harbour in Vancouver mit Hochhäusern, grüner Uferpromenade und Wasser"
+				widths={[640, 960, 1440, 1920, 2400]}
+				sizes="100vw"
+				loading="eager"
+				fetchpriority="high"
+			/>
+			<div class="cover-shade" aria-hidden="true"></div>
+			<div class="cover-content">
+				<p class="cover-kicker">
+					Kapitel {CURRENT_CHAPTER.number} · {CURRENT_CHAPTER.location} · {CURRENT_CHAPTER.period}
+				</p>
+				<h1>{CURRENT_CHAPTER.title}</h1>
+				<p class="byline">Meine erste internationale Reise, ein Semester in Vancouver</p>
+				<a class="cover-link" href="#journal">Zum Journal <span aria-hidden="true">↓</span></a>
+			</div>
+			<figcaption>
+				Temporäres Foto: <a
+					href="https://commons.wikimedia.org/wiki/File:Vancouver_harbour_skyline_(44723845851).jpg"
+					lang="en">dronepicr</a
+				>, <a href="https://creativecommons.org/licenses/by/2.0/deed.de">CC BY 2.0</a>
+			</figcaption>
+		</figure>
+
+		<div class="page-shell">
+			<section class="introduction" aria-labelledby="introduction-heading">
+				<p class="eyebrow">Aktuelles Kapitel</p>
+				<div>
+					<h2 id="introduction-heading">Ein Semester zwischen Campus, Küste und Alltag.</h2>
+					<p>
+						Westwärts ist das erste Kapitel dieses Reiseblogs. Hier sammle ich persönliche
+						Beobachtungen, Bilder und Geschichten aus Vancouver. Weitere Reisen können später
+						dazukommen, ohne dass die Seite neu gedacht werden muss.
+					</p>
+				</div>
+			</section>
+
+			<section class="latest" aria-labelledby="latest-heading">
+				<div class="latest-label">
+					<p class="eyebrow">Neueste Notiz</p>
+					<p class="entry-number" aria-hidden="true">01</p>
+				</div>
+				{
+					latestPost ? (
+						<div class="latest-story">
+							<p class="latest-meta">
+								{latestPost.data.location ?? 'Vancouver, BC'} ·{' '}
+								{latestPost.data.draft ? 'Entwurf' : 'Veröffentlicht'}
+							</p>
+							<h2 id="latest-heading">{latestPost.data.title}</h2>
+							<p>{latestPost.data.description}</p>
+							<a href={`/blog/${latestPost.id}/`}>
+								Notiz lesen <span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					) : (
+						<div class="latest-story">
+							<h2 id="latest-heading">Die erste Notiz ist unterwegs.</h2>
+							<p>Nach der Ankunft beginnt hier das öffentliche Journal.</p>
+						</div>
+					)
+				}
+			</section>
+
+			<section id="journal" class="journal" aria-labelledby="journal-heading">
+				<div class="section-heading">
+					<p class="eyebrow">Aus diesem Kapitel</p>
+					<h2 id="journal-heading">Journal</h2>
+					<a href="/blog">Alle Einträge</a>
+				</div>
+				{
+					posts.length > 0 ? (
+						<div class="post-list">
+							{posts.slice(0, 4).map((post, index) => (
+								<PostPreview post={post} index={index} />
+							))}
+						</div>
+					) : (
+						<p class="empty-state">Noch ist hier alles ruhig. Der erste Beitrag folgt bald.</p>
+					)
+				}
+			</section>
+		</div>
+
+		<section class="chapters" aria-labelledby="chapters-heading">
+			<div class="chapters-inner">
+				<div class="chapters-heading">
+					<p class="eyebrow">Reisen</p>
+					<h2 id="chapters-heading">Kapitel</h2>
+				</div>
+				<article class="chapter-entry">
+					<p class="chapter-number">{CURRENT_CHAPTER.number}</p>
+					<div>
+						<h3>{CURRENT_CHAPTER.title}</h3>
+						<p>{CURRENT_CHAPTER.location} · {CURRENT_CHAPTER.period}</p>
+					</div>
+					<a href="/blog">Aktuelles Kapitel öffnen <span aria-hidden="true">↗</span></a>
+				</article>
+			</div>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.cover {
+		position: relative;
+		min-height: calc(100svh - 5rem);
+		margin: 0;
+		overflow: hidden;
+		background: var(--color-ink);
+		color: var(--color-paper-light);
+	}
+	.cover :global(.cover-image) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 55%;
+	}
+	.cover-shade {
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(
+				90deg,
+				rgb(5 13 12 / 78%) 0%,
+				rgb(5 13 12 / 30%) 55%,
+				rgb(5 13 12 / 12%) 100%
+			),
+			linear-gradient(0deg, rgb(5 13 12 / 72%) 0%, transparent 50%);
+	}
+	.cover-content {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		align-items: flex-start;
+		justify-content: flex-end;
+		flex-direction: column;
+		width: min(calc(100% - 2 * var(--page-gutter)), var(--content-wide));
+		min-height: calc(100svh - 5rem);
+		margin-inline: auto;
+		padding-block: clamp(5rem, 12vh, 9rem);
+	}
+	.cover-kicker,
+	.latest-meta {
+		font-family: var(--font-meta);
+		font-size: clamp(0.68rem, 1.2vw, 0.78rem);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+	.cover-kicker {
+		margin: 0 0 1rem;
+		color: #d8dfdc;
+	}
+	h1 {
+		font-size: clamp(4.2rem, 15vw, 11rem);
+		letter-spacing: -0.065em;
+		line-height: 0.78;
+		text-wrap: balance;
+	}
+	.byline {
+		margin: 1.5rem 0 0;
+		font-family: var(--font-display);
+		font-size: clamp(1.25rem, 3vw, 2rem);
+	}
+	.cover-link {
+		display: inline-flex;
+		gap: 0.75rem;
+		align-items: center;
+		min-height: 2.75rem;
+		margin-top: 2.5rem;
+		border-bottom: 1px solid var(--color-focus);
+		color: white;
+		font-size: 0.9rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	figcaption {
+		position: absolute;
+		right: var(--page-gutter);
+		bottom: 1rem;
+		z-index: 2;
+		color: #c7cfcc;
+		font-size: 0.7rem;
+	}
+	figcaption a {
+		color: inherit;
+	}
+	.page-shell {
+		width: min(calc(100% - 2 * var(--page-gutter)), var(--content-wide));
+		margin-inline: auto;
+	}
+	.introduction {
+		display: grid;
+		grid-template-columns: minmax(10rem, 0.65fr) minmax(0, 2fr);
+		gap: clamp(2rem, 6vw, 7rem);
+		padding-block: clamp(5rem, 11vw, 10rem);
+	}
+	.introduction h2 {
+		max-width: 19ch;
+		font-size: clamp(2.4rem, 6vw, 5rem);
+		letter-spacing: -0.035em;
+	}
+	.introduction div > p {
+		max-width: 45rem;
+		margin: 1.75rem 0 0;
+		color: var(--color-text-muted);
+		font-size: clamp(1.08rem, 2vw, 1.3rem);
+	}
+	.latest {
+		display: grid;
+		grid-template-columns: minmax(12rem, 0.8fr) minmax(0, 2fr);
+		gap: clamp(2rem, 6vw, 7rem);
+		border-block: 1px solid var(--color-border);
+		padding-block: clamp(3rem, 7vw, 5.5rem);
+	}
+	.entry-number {
+		margin: 2.5rem 0 0;
+		color: #d1cabd;
+		font-family: var(--font-display);
+		font-size: clamp(5rem, 12vw, 9rem);
+		line-height: 0.7;
+	}
+	.latest-meta {
+		margin: 0 0 1rem;
+		color: var(--color-text-muted);
+	}
+	.latest-story h2 {
+		max-width: 17ch;
+		font-size: clamp(2.3rem, 5.5vw, 4.5rem);
+		letter-spacing: -0.035em;
+	}
+	.latest-story > p:not(.latest-meta) {
+		max-width: 42rem;
+		margin: 1.4rem 0;
+		color: var(--color-text-muted);
+		font-size: 1.1rem;
+	}
+	.latest-story a,
+	.section-heading a,
+	.chapters a {
+		display: inline-flex;
+		align-items: center;
+		width: fit-content;
+		min-height: 2.75rem;
+		font-weight: 700;
+	}
+	.journal {
+		padding-block: clamp(5rem, 9vw, 8rem);
+	}
+	.section-heading {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: end;
+		gap: 1rem;
+		margin-bottom: 2rem;
+	}
+	.section-heading .eyebrow {
+		grid-column: 1 / -1;
+	}
+	.section-heading h2 {
+		font-size: clamp(3rem, 8vw, 6rem);
+		letter-spacing: -0.04em;
+	}
+	.empty-state {
+		border-block: 1px solid var(--color-border);
+		padding-block: 2rem;
+		color: var(--color-text-muted);
+	}
+	.chapters {
+		padding: clamp(4rem, 9vw, 8rem) var(--page-gutter);
+		background: var(--color-ink-soft);
+		color: var(--color-paper-light);
+	}
+	.chapters-inner {
+		display: grid;
+		grid-template-columns: minmax(min-content, 0.6fr) minmax(20rem, 2fr);
+		gap: clamp(2rem, 5vw, 5rem);
+		width: min(100%, var(--content-wide));
+		margin-inline: auto;
+	}
+	.chapters .eyebrow {
+		color: var(--color-focus);
+	}
+	.chapters-heading h2 {
+		margin-top: 0.75rem;
+		font-size: clamp(3rem, 7vw, 5.5rem);
+		white-space: nowrap;
+	}
+	.chapter-entry {
+		display: grid;
+		grid-template-columns: 3rem 1fr auto;
+		align-items: center;
+		gap: clamp(1rem, 3vw, 2.5rem);
+		border-block: 1px solid var(--color-border-dark);
+		padding-block: 1.5rem;
+	}
+	.chapter-entry p {
+		margin: 0;
+		color: #c3cbc8;
+	}
+	.chapter-number {
+		font-family: var(--font-meta);
+		font-size: 0.75rem;
+		letter-spacing: 0.08em;
+	}
+	.chapter-entry h3 {
+		font-size: clamp(2rem, 4vw, 3.5rem);
+	}
+	.chapter-entry a {
+		color: var(--color-paper-light);
+	}
+	@media (max-width: 760px) {
+		.cover {
+			min-height: calc(100svh - 7.8rem);
+		}
+		.cover :global(.cover-image) {
+			object-position: 24% center;
+		}
+		.cover-content {
+			min-height: calc(100svh - 7.8rem);
+			padding-bottom: 7rem;
+		}
+		figcaption {
+			left: var(--page-gutter);
+			right: auto;
+		}
+		.introduction,
+		.latest {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+		.entry-number {
+			display: none;
+		}
+		.chapters-inner {
+			grid-template-columns: 1fr;
+		}
+		.chapter-entry {
+			grid-template-columns: 2rem 1fr;
+		}
+		.chapter-entry a {
+			grid-column: 2;
+		}
+	}
+	@media (max-width: 420px) {
+		h1 {
+			font-size: clamp(3.6rem, 19vw, 5rem);
+		}
+		.section-heading {
+			align-items: start;
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

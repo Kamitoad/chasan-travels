@@ -1,114 +1,76 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import PostPreview from '../../components/PostPreview.astro';
+import { CURRENT_CHAPTER, SITE_TITLE } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getVisiblePosts } from '../../lib/posts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = await getVisiblePosts();
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout
+	title={`Journal · ${SITE_TITLE}`}
+	description="Alle Geschichten und Notizen aus Chasan Moustafas Auslandssemester in Vancouver."
+>
+	<main id="main-content" class="archive">
+		<header>
+			<p class="eyebrow">Kapitel {CURRENT_CHAPTER.number} · {CURRENT_CHAPTER.title}</p>
+			<h1>Journal</h1>
+			<p>
+				Chronologisch gesammelt: Ankommen, Campusleben, Stadt, Natur und die kleinen Dinge
+				dazwischen.
+			</p>
+		</header>
+		{
+			posts.length > 0 ? (
+				<div class="post-list" aria-label="Journal-Einträge">
+					{posts.map((post, index) => (
+						<PostPreview post={post} index={index} />
+					))}
+				</div>
+			) : (
+				<p class="empty-state">Noch ist hier alles ruhig. Der erste Beitrag folgt bald.</p>
+			)
+		}
+	</main>
+</BaseLayout>
+
+<style>
+	.archive {
+		width: min(calc(100% - 2 * var(--page-gutter)), var(--content-wide));
+		margin-inline: auto;
+		padding-block: clamp(4rem, 9vw, 8rem);
+	}
+	header {
+		display: grid;
+		grid-template-columns: 1fr minmax(16rem, 0.8fr);
+		align-items: end;
+		gap: 2rem;
+		margin-bottom: clamp(4rem, 9vw, 7rem);
+	}
+	.eyebrow {
+		grid-column: 1 / -1;
+	}
+	h1 {
+		font-size: clamp(4rem, 13vw, 9rem);
+		letter-spacing: -0.06em;
+		line-height: 0.75;
+	}
+	header > p:last-child,
+	.empty-state {
+		margin: 0;
+		color: var(--color-text-muted);
+		font-size: 1.1rem;
+	}
+	.post-list :global(.post-preview:last-child) {
+		border-bottom: 1px solid var(--color-border);
+	}
+	.empty-state {
+		border-block: 1px solid var(--color-border);
+		padding-block: 2rem;
+	}
+	@media (max-width: 700px) {
+		header {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
