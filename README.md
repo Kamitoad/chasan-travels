@@ -6,8 +6,11 @@ im Repository. Eine Datenbank oder ein CMS ist für die erste Version nicht erfo
 
 ## Voraussetzungen
 
-- Node.js 22.12 oder neuer
-- pnpm
+- Node.js 24.20.0
+- pnpm 11.24.0
+
+Die verwendeten Werkzeugversionen stehen in `package.json`. Volta wählt innerhalb des Projektordners
+automatisch die dort festgelegte Node Version.
 
 ## Lokale Entwicklung
 
@@ -66,12 +69,11 @@ Das editierbare Logo kann mit Adobe Illustrator aus dem Skript
 ## Qualitätsprüfungen
 
 ```sh
-pnpm format:check
-pnpm check
-pnpm build
+pnpm verify
 ```
 
-Mit `pnpm format` lässt sich die Formatierung automatisch korrigieren.
+Der Befehl prüft nacheinander die Formatierung, die Astro Typen und den Produktionsbuild. Mit
+`pnpm format` lässt sich die Formatierung automatisch korrigieren.
 
 ## Konfiguration
 

@@ -2,8 +2,9 @@
 	"name": "chasan-travels",
 	"type": "module",
 	"version": "0.0.1",
+	"packageManager": "pnpm@11.24.0",
 	"engines": {
-		"node": ">=22.12.0"
+		"node": "24.x"
 	},
 	"scripts": {
 		"dev": "astro dev",
@@ -12,6 +13,7 @@
 		"check": "astro check",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
+		"verify": "pnpm format:check && pnpm check && pnpm build",
 		"new-post": "node scripts/new-post.mjs",
 		"astro": "astro"
 	},
@@ -22,9 +24,6 @@
 		"astro": "^7.2.6",
 		"sharp": "^0.35.0"
 	},
-	"allowScripts": {
-		"esbuild": true
-	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.10",
 		"prettier": "^3.9.6",
@@ -32,6 +31,6 @@
 		"typescript": "^5.9.3"
 	},
 	"volta": {
-		"node": "22.23.2"
+		"node": "24.20.0"
 	}
 }
