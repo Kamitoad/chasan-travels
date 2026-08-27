@@ -1,63 +1,100 @@
-# Astro Starter Kit: Blog
+# Chasan Moustafas Reiseblog
+
+Ein statischer Reiseblog für Chasan Moustafas persönliche Geschichten und Bilder. Westwärts ist das
+erste Kapitel und begleitet das Auslandssemester in Vancouver. Beiträge liegen als Markdown Dateien
+im Repository. Eine Datenbank oder ein CMS ist für die erste Version nicht erforderlich.
+
+## Voraussetzungen
+
+- Node.js 22.12 oder neuer
+- pnpm
+
+## Lokale Entwicklung
+
+Beim ersten Start werden zunächst die Abhängigkeiten installiert:
 
 ```sh
-pnpm create astro@latest -- --template blog
+pnpm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Anschließend startet dieser Befehl die lokale Vorschau mit automatischer Aktualisierung:
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```sh
+pnpm dev
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Astro zeigt die lokale Adresse anschließend im Terminal an.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Alternativ kann die Vorschau im Hintergrund laufen:
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+```sh
+pnpm astro dev --background
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+Status und Ausgaben lassen sich anschließend so prüfen:
 
-## 🧞 Commands
+```sh
+pnpm astro dev status
+pnpm astro dev logs
+```
 
-All commands are run from the root of the project, from a terminal:
+Zum vollständigen Neustart wird die laufende Vorschau zuerst beendet und danach wieder gestartet:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+```sh
+pnpm astro dev stop
+pnpm astro dev --background
+```
 
-## 👀 Want to learn more?
+## Beiträge schreiben
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+pnpm new-post -- "Titel des Beitrags"
+```
 
-## Credit
+Das Kommando legt unter `src/content/blog/` einen unveröffentlichten Markdown-Entwurf an. Weitere
+Hinweise stehen in [`docs/content-guide.md`](docs/content-guide.md).
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Die visuelle Richtung und die wichtigsten UI-Konventionen stehen in
+[`docs/design-system.md`](docs/design-system.md).
+
+## Logo
+
+Das editierbare Logo kann mit Adobe Illustrator aus dem Skript
+`scripts/illustrator/create-chasan-travels-logo.jsx` erzeugt werden. Die Anleitung steht in
+[`docs/logo-guide.md`](docs/logo-guide.md).
+
+## Qualitätsprüfungen
+
+```sh
+pnpm format:check
+pnpm check
+pnpm build
+```
+
+Mit `pnpm format` lässt sich die Formatierung automatisch korrigieren.
+
+## Konfiguration
+
+Titel, Beschreibung und das aktuelle Kapitel stehen in `src/consts.ts`. Für eine öffentliche
+Veröffentlichung muss `SITE_URL` auf die endgültige HTTPS Adresse gesetzt werden. Ohne diese Variable
+verwendet der lokale Build `http://localhost:4321`.
+
+Das derzeitige Vancouver Titelbild ist ein klar gekennzeichneter, frei lizenzierter Platzhalter.
+Vor der Veröffentlichung kann es unter `src/assets/photos/` durch ein eigenes Foto ersetzt werden.
+Bildnachweis und Alternativtext müssen dabei ebenfalls angepasst werden.
+
+Hinweise zu eingebundenen Schriften und Bildern stehen in `THIRD_PARTY_NOTICES.md`.
+
+## Lizenz
+
+Der Quellcode steht unter der [MIT-Lizenz](LICENSE).
+
+Sofern nicht anders angegeben, bleiben persönliche Blogbeiträge und eigene Fotografien urheberrechtlich
+Chasan Moustafa vorbehalten. Inhalte Dritter unterliegen ihren jeweiligen Lizenzen. Einzelheiten stehen
+in `THIRD_PARTY_NOTICES.md`.
+
+## Veröffentlichung
+
+Die geplante Zielplattform ist GitHub Pages. Der Deployment-Workflow wird erst ergänzt, nachdem
+Repository-Name, Sichtbarkeit und endgültige URL feststehen. Vor dem ersten Push erfolgt ein eigener
+Check auf Zugangsdaten, private Inhalte und Metadaten in Fotos.
