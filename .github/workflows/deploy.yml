@@ -1,0 +1,55 @@
+name: Verify and deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SITE_URL: ${{ vars.SITE_URL }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Validate public site URL
+        shell: bash
+        run: |
+          if [[ ! "$SITE_URL" =~ ^https:// ]]; then
+            echo "::error::Set the repository variable SITE_URL to the final HTTPS address."
+            exit 1
+          fi
+
+      - name: Install, verify, build, and upload
+        uses: withastro/action@v6
+        with:
+          node-version: 24.20.0
+          package-manager: pnpm@11.24.0
+          build-cmd: pnpm verify
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
