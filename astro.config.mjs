@@ -1,13 +1,18 @@
 // @ts-check
 
-import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 
+const site = process.env.SITE_URL ?? 'http://localhost:4321';
+
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
-	integrations: [mdx(), sitemap()],
+	site,
+	markdown: {
+		processor: unified(),
+	},
+	integrations: [sitemap()],
 	fonts: [
 		{
 			provider: fontProviders.local(),
