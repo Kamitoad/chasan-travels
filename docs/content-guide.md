@@ -6,7 +6,7 @@ URL und sollte nach der Veröffentlichung nicht mehr geändert werden.
 ## Neuen Entwurf anlegen
 
 ```sh
-pnpm new-post -- "Meine erste Woche"
+pnpm new-post "Meine erste Woche"
 ```
 
 Der neue Beitrag enthält immer `draft: true`. Entwürfe sind lokal sichtbar, werden aber weder in

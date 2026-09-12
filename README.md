@@ -51,7 +51,7 @@ pnpm astro dev --background
 ## Beiträge schreiben
 
 ```sh
-pnpm new-post -- "Titel des Beitrags"
+pnpm new-post "Titel des Beitrags"
 ```
 
 Das Kommando legt unter `src/content/blog/` einen unveröffentlichten Markdown-Entwurf an. Weitere

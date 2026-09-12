@@ -1,10 +1,12 @@
 import { access, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const title = process.argv.slice(2).join(' ').trim();
+const args = process.argv.slice(2);
+const titleArgs = args[0] === '--' ? args.slice(1) : args;
+const title = titleArgs.join(' ').trim();
 
 if (!title) {
-	console.error('Bitte gib einen Titel an: pnpm new-post -- "Mein Beitrag"');
+	console.error('Bitte gib einen Titel an: pnpm new-post "Mein Beitrag"');
 	process.exitCode = 1;
 } else {
 	await createPost(title);
@@ -23,7 +25,7 @@ async function createPost(postTitle) {
 
 	const date = new Date().toISOString().slice(0, 10);
 	const content = `---
-title: ${JSON.stringify(postTitle)}
+title: ${quoteYamlString(postTitle)}
 description: 'TODO: Kurze Zusammenfassung mit höchstens 160 Zeichen.'
 pubDate: ${date}
 tags: []
@@ -35,6 +37,10 @@ Hier beginnt dein Beitrag.
 
 	await writeFile(postPath, content, 'utf8');
 	console.log(`Entwurf erstellt: ${postPath}`);
+}
+
+function quoteYamlString(value) {
+	return `'${value.replaceAll("'", "''")}'`;
 }
 
 function createSlug(value) {
