@@ -15,6 +15,8 @@ const today = new Date();
 			<a href="/about">Über</a>
 			<a href="/credits">Bildnachweise</a>
 			<a href="/rss.xml">RSS Feed</a>
+			<a href="/impressum">Impressum</a>
+			<a href="/datenschutz">Datenschutz</a>
 		</nav>
 	</div>
 </footer>
@@ -45,6 +47,8 @@ const today = new Date();
 	}
 	nav {
 		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
 		gap: 1.5rem;
 	}
 	a {
@@ -60,7 +64,7 @@ const today = new Date();
 			gap: 1.5rem;
 		}
 		nav {
-			flex-wrap: wrap;
+			justify-content: flex-start;
 			gap: 0.5rem 1.5rem;
 		}
 	}

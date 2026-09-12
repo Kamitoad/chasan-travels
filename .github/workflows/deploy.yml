@@ -16,6 +16,12 @@ concurrency:
 
 env:
   SITE_URL: ${{ vars.SITE_URL || 'https://example.com' }}
+  LEGAL_NAME: ${{ github.event_name == 'pull_request' && 'Test Name' || secrets.LEGAL_NAME }}
+  LEGAL_STREET: ${{ github.event_name == 'pull_request' && 'Teststraße 1' || secrets.LEGAL_STREET }}
+  LEGAL_POSTAL_CODE: ${{ github.event_name == 'pull_request' && '12345' || secrets.LEGAL_POSTAL_CODE }}
+  LEGAL_CITY: ${{ github.event_name == 'pull_request' && 'Teststadt' || secrets.LEGAL_CITY }}
+  LEGAL_COUNTRY: ${{ github.event_name == 'pull_request' && 'Deutschland' || secrets.LEGAL_COUNTRY }}
+  LEGAL_EMAIL: ${{ github.event_name == 'pull_request' && 'test@example.test' || secrets.LEGAL_EMAIL }}
 
 jobs:
   build:

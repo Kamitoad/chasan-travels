@@ -81,6 +81,18 @@ Titel, Beschreibung und das aktuelle Kapitel stehen in `src/consts.ts`. Für ein
 Veröffentlichung muss `SITE_URL` auf die endgültige HTTPS Adresse gesetzt werden. Ohne diese Variable
 verwendet der lokale Build `http://localhost:4321`.
 
+Impressum und Datenschutzerklärung beziehen die veröffentlichungspflichtigen Kontaktdaten beim Build
+aus Umgebungsvariablen. Für die lokale Entwicklung wird `.env.example` nach `.env` kopiert und mit den
+eigenen Werten ergänzt. `.env` darf nicht committet werden. Ein Produktionsbuild bricht ab, wenn eine
+dieser Variablen fehlt:
+
+- `LEGAL_NAME`
+- `LEGAL_STREET`
+- `LEGAL_POSTAL_CODE`
+- `LEGAL_CITY`
+- `LEGAL_COUNTRY`
+- `LEGAL_EMAIL`
+
 Das derzeitige Vancouver Titelbild ist ein klar gekennzeichneter, frei lizenzierter Platzhalter.
 Vor der Veröffentlichung kann es unter `src/assets/photos/` durch ein eigenes Foto ersetzt werden.
 Bildnachweis und Alternativtext müssen dabei ebenfalls angepasst werden.
@@ -107,6 +119,10 @@ Zum Veröffentlichen wird im GitHub Repository unter
 angelegt. Ihr Wert ist die endgültige HTTPS Adresse, zum Beispiel `https://chasantravels.de`. Die
 Adresse ist öffentlich und gehört deshalb nicht in die Secrets. Nach dem Eintragen veröffentlicht
 der nächste Push auf `main` oder eine manuelle Ausführung des Workflows die Website.
+
+Die sechs `LEGAL_*`-Werte werden an derselben Stelle unter `Secrets` angelegt. Sie stehen dadurch nicht
+im Repository oder in der Workflowdatei. Beim statischen Build werden sie in Impressum und
+Datenschutzerklärung eingesetzt und sind anschließend auf diesen Seiten öffentlich sichtbar.
 
 Anschließend wird unter `Settings > Pages` als Quelle `GitHub Actions` gewählt. Eine eigene Domain
 wird dort zusätzlich unter `Custom domain` eingetragen. Dieses Projekt verwendet bewusst keinen

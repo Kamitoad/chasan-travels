@@ -1,0 +1,29 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { legalDetails } from '../lib/legal';
+---
+
+<LegalLayout
+	title="Impressum"
+	description="Impressum und Anbieterkennzeichnung von Chasan Travels."
+>
+	<address class="legal-address">
+		{legalDetails.name}<br />
+		{legalDetails.street}<br />
+		{`${legalDetails.postalCode} ${legalDetails.city}`}<br />
+		{legalDetails.country}
+	</address>
+
+	<h2>Kontakt</h2>
+	<p>E-Mail: <a href={`mailto:${legalDetails.email}`}>{legalDetails.email}</a></p>
+
+	<h2>Redaktionell verantwortlich</h2>
+	<p>
+		{legalDetails.name}<br />
+		Anschrift wie oben
+	</p>
+
+	<p class="legal-source">
+		Quelle: <a href="https://www.e-recht24.de" rel="noreferrer">e-recht24.de</a>
+	</p>
+</LegalLayout>
