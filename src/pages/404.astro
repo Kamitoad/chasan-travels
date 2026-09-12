@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title="Seite nicht gefunden · Chasan Travels"
+	description="Die angeforderte Seite wurde nicht gefunden."
+>
+	<main id="main-content" class="not-found">
+		<div class="error-code" aria-hidden="true">404</div>
+		<div class="message">
+			<p class="eyebrow">Falsche Abzweigung · Fehler 404</p>
+			<h1>Diese Route endet hier.</h1>
+			<p class="intro">
+				Die gesuchte Seite gibt es nicht oder sie ist inzwischen unter einer anderen Adresse zu
+				finden. Von hier führen zwei vertraute Wege weiter.
+			</p>
+			<nav aria-label="Weiterführende Seiten">
+				<a class="primary-link" href="/">Zur Startseite <span aria-hidden="true">→</span></a>
+				<a href="/blog">Zum Journal <span aria-hidden="true">→</span></a>
+			</nav>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.not-found {
+		display: grid;
+		grid-template-columns: minmax(12rem, 0.65fr) minmax(20rem, 1fr);
+		align-items: center;
+		gap: clamp(3rem, 9vw, 9rem);
+		width: min(calc(100% - 2 * var(--page-gutter)), var(--content-wide));
+		min-height: 66vh;
+		margin-inline: auto;
+		padding-block: clamp(4rem, 10vw, 9rem);
+	}
+	.error-code {
+		border-block: 1px solid var(--color-border);
+		padding-block: clamp(1.5rem, 4vw, 3rem);
+		color: var(--color-accent-dark);
+		font-family: var(--font-meta);
+		font-size: clamp(4.5rem, 15vw, 10rem);
+		font-weight: 700;
+		letter-spacing: -0.08em;
+		line-height: 0.8;
+	}
+	h1 {
+		max-width: 11ch;
+		margin-top: 1.25rem;
+		font-size: clamp(3rem, 8vw, 7rem);
+		letter-spacing: -0.055em;
+		line-height: 0.94;
+		text-wrap: balance;
+	}
+	.intro {
+		max-width: 38rem;
+		margin-block: 2rem 0;
+		color: var(--color-text-muted);
+		font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+	}
+	nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 2rem;
+		margin-top: 2.5rem;
+	}
+	nav a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		min-height: 2.75rem;
+		font-weight: 700;
+	}
+	.primary-link {
+		min-width: 12rem;
+		border-bottom: 1px solid var(--color-border);
+		text-decoration: none;
+	}
+	@media (max-width: 700px) {
+		.not-found {
+			grid-template-columns: 1fr;
+			align-content: center;
+			gap: 3rem;
+		}
+		.error-code {
+			width: min-content;
+		}
+	}
+</style>
