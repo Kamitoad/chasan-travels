@@ -82,6 +82,7 @@ Jetzt saß ich wieder in einem Flugzeug. Diesmal auf dem Weg in ein anderes Land
 ![Ein Tablett mit einer warmen Mahlzeit, Reis, Brot und Nachtisch im Flugzeug](../../assets/photos/meine-ankunft/20260903_160225.jpg)
 
 _Passend zum Flug nach Kanada gab es Hähnchen-Gyros mit Zaziki und einem Berliner. Eigenes Foto._
+
 Während des Fluges gen Westen blieb es die gesamte Zeit hell.
 Mein Körper hat sich natürlich tierisch darüber gefreut, dass um zwei Uhr morgens nach deutscher Zeit noch immer die Sonne schien...
 
