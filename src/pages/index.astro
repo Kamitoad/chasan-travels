@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import vancouverHarbour from '../assets/photos/vancouver-harbour.jpg';
+import calgaryAirport from '../assets/photos/calgary-airport.jpg';
 import PostPreview from '../components/PostPreview.astro';
 import { CURRENT_CHAPTER, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -10,13 +10,13 @@ const posts = await getVisiblePosts();
 const latestPost = posts[0];
 ---
 
-<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} image={vancouverHarbour}>
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} image={calgaryAirport}>
 	<main id="main-content">
 		<figure class="cover">
 			<Image
 				class="cover-image"
-				src={vancouverHarbour}
-				alt="Coal Harbour in Vancouver mit Hochhäusern, grüner Uferpromenade und Wasser"
+				src={calgaryAirport}
+				alt="Sonnenlicht bricht durch dunkle Wolken über dem Vorfeld des Flughafens Calgary"
 				widths={[640, 960, 1440, 1920, 2400]}
 				sizes="100vw"
 				loading="eager"
@@ -31,12 +31,7 @@ const latestPost = posts[0];
 				<p class="byline">Meine erste internationale Reise, ein Semester in Vancouver</p>
 				<a class="cover-link" href="#journal">Zum Journal <span aria-hidden="true">↓</span></a>
 			</div>
-			<figcaption>
-				Temporäres Foto: <a
-					href="https://commons.wikimedia.org/wiki/File:Vancouver_harbour_skyline_(44723845851).jpg"
-					lang="en">dronepicr</a
-				>, <a href="https://creativecommons.org/licenses/by/2.0/deed.de">CC BY 2.0</a>
-			</figcaption>
+			<figcaption>Eigenes Foto · Flughafen Calgary</figcaption>
 		</figure>
 
 		<div class="page-shell">

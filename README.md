@@ -93,9 +93,9 @@ dieser Variablen fehlt:
 - `LEGAL_COUNTRY`
 - `LEGAL_EMAIL`
 
-Das derzeitige Vancouver Titelbild ist ein klar gekennzeichneter, frei lizenzierter Platzhalter.
-Vor der Veröffentlichung kann es unter `src/assets/photos/` durch ein eigenes Foto ersetzt werden.
-Bildnachweis und Alternativtext müssen dabei ebenfalls angepasst werden.
+Das Titelbild verwendet ein eigenes Foto vom Flughafen Calgary. Für weitere Fotos müssen
+Bildnachweis, Alternativtext und mögliche sensible Metadaten vor der Veröffentlichung geprüft
+werden.
 
 Hinweise zu eingebundenen Schriften und Bildern stehen in `THIRD_PARTY_NOTICES.md`.
 

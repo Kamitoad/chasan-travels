@@ -18,6 +18,13 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# Local-only drafts and demo assets
+/src/content/blog/bildprobe.md
+/src/content/blog/willkommen.md
+/src/assets/photos/stanley-park.jpg
+/src/assets/photos/vancouver-harbour.jpg
+/src/assets/photos/meine-ankunft/20260903_223056.jpg
+
 # macOS-specific files
 .DS_Store
 

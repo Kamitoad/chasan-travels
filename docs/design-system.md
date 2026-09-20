@@ -38,14 +38,11 @@ Semantische Landmarks, eine einzelne Hauptüberschrift, beschriftete Regionen, `
 Skip-Link und aussagekräftige Alternativtexte sind verbindlich. Bewegung bleibt optional und wird
 bei `prefers-reduced-motion` reduziert.
 
-## Bildplatzhalter
+## Fotos
 
-Das aktuelle Vancouver-Foto stammt von
-[dronepicr auf Wikimedia Commons](<https://commons.wikimedia.org/wiki/File:Vancouver_harbour_skyline_(44723845851).jpg>)
-und ist unter [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.de) lizenziert. Der
-Nachweis erscheint direkt an jeder Verwendung. Das Bild ist nur als Platzhalter gedacht und soll
-später durch eigene Aufnahmen ersetzt werden. Die lokale Kopie wurde neu komprimiert und von
-Metadaten befreit. Diese Bearbeitung steht gesammelt auf der Seite für Bildnachweise.
+Das aktuelle Titelbild ist ein eigenes Foto vom Flughafen Calgary. Eigene und fremde Aufnahmen
+werden mit aussagekräftigem Alternativtext, Bildunterschrift und gegebenenfalls sichtbarem
+Bildnachweis verwendet. Vor der Veröffentlichung werden sensible Metadaten entfernt.
 
 ## Sinnvolle nächste Erweiterungen
 
