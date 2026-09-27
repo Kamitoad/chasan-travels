@@ -1,29 +1,37 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
+import { postUrl, type Language } from '../lib/posts';
 
 interface Props {
 	post: CollectionEntry<'blog'>;
 	index: number;
+	language?: Language;
 }
 
-const { post, index } = Astro.props;
+const { post, index, language = 'de' } = Astro.props;
 const entryNumber = String(index + 1).padStart(2, '0');
+const href = postUrl(post.id, language);
 ---
 
 <article class="post-preview">
 	<p class="number" aria-hidden="true">{entryNumber}</p>
 	<div class="meta">
-		<FormattedDate date={post.data.pubDate} />
+		<FormattedDate date={post.data.pubDate} language={language} />
 		{post.data.location && <span>{post.data.location}</span>}
-		{post.data.draft && <span class="draft">Entwurf</span>}
+		{post.data.draft && <span class="draft">{language === 'en' ? 'Draft' : 'Entwurf'}</span>}
 	</div>
 	<div class="story">
-		<h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+		<h2><a href={href}>{post.data.title}</a></h2>
 		<p>{post.data.description}</p>
 	</div>
-	<a class="read-link" href={`/blog/${post.id}/`} aria-label={`„${post.data.title}“ lesen`}>
-		Lesen <span aria-hidden="true">↗</span>
+	<a
+		class="read-link"
+		href={href}
+		aria-label={language === 'en' ? `Read “${post.data.title}”` : `„${post.data.title}“ lesen`}
+	>
+		{language === 'en' ? 'Read' : 'Lesen'}
+		<span aria-hidden="true">↗</span>
 	</a>
 </article>
 

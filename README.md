@@ -81,6 +81,11 @@ Titel, Beschreibung und das aktuelle Kapitel stehen in `src/consts.ts`. Für ein
 Veröffentlichung muss `SITE_URL` auf die endgültige HTTPS Adresse gesetzt werden. Ohne diese Variable
 verwendet der lokale Build `http://localhost:4321`.
 
+Deutsch bleibt unter den bisherigen Adressen verfügbar; die englische Version liegt unter `/en/`.
+Der Sprachwechsel führt bei übersetzten Seiten zur entsprechenden Fassung. Beiträge liegen weiterhin
+in der `blog` Content Collection. Übersetzungen, Entwürfe und die getrennten RSS-Feeds sind in
+[`docs/content-guide.md`](docs/content-guide.md) beschrieben.
+
 Impressum und Datenschutzerklärung beziehen die veröffentlichungspflichtigen Kontaktdaten beim Build
 aus Umgebungsvariablen. Für die lokale Entwicklung wird `.env.example` nach `.env` kopiert und mit den
 eigenen Werten ergänzt. `.env` darf nicht committet werden. Ein Produktionsbuild bricht ab, wenn eine

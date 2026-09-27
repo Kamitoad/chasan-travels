@@ -1,22 +1,68 @@
 ---
 import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+import type { Language } from '../lib/posts';
+
+interface Props {
+	language?: Language;
+	alternatePath?: string;
+}
+
+const { language = 'de', alternatePath } = Astro.props;
+const prefix = language === 'en' ? '/en' : '';
 ---
 
 <header>
-	<nav aria-label="Hauptnavigation">
-		<a class="brand" href="/" aria-label={`${SITE_TITLE}, Startseite`}>
+	<nav aria-label={language === 'en' ? 'Main navigation' : 'Hauptnavigation'}>
+		<a
+			class="brand"
+			href={`${prefix}/`}
+			aria-label={`${SITE_TITLE}, ${language === 'en' ? 'home' : 'Startseite'}`}
+		>
 			<img class="brand-mark" src="/favicon.svg" alt="" width="48" height="48" />
 			<span class="brand-copy">
 				<strong>{SITE_TITLE}</strong>
-				<small>Reisen · Geschichten · Erinnerungen</small>
+				<small
+					>{
+						language === 'en'
+							? 'Travel · Stories · Memories'
+							: 'Reisen · Geschichten · Erinnerungen'
+					}</small
+				>
 			</span>
 		</a>
 		<div class="internal-links">
-			<HeaderLink href="/">Start</HeaderLink>
-			<HeaderLink href="/blog">Journal</HeaderLink>
-			<HeaderLink href="/about">Über</HeaderLink>
+			<HeaderLink href={`${prefix}/`}>{language === 'en' ? 'Home' : 'Start'}</HeaderLink>
+			<HeaderLink href={`${prefix}/blog`}>Journal</HeaderLink>
+			<HeaderLink href={`${prefix}/about`}>{language === 'en' ? 'About' : 'Über'}</HeaderLink>
 		</div>
+		{
+			alternatePath && (
+				<div
+					class="language-switch"
+					role="group"
+					aria-label="Wähle deine Sprache / Choose your language"
+				>
+					<a
+						href={language === 'de' ? Astro.url.pathname : alternatePath}
+						lang="de"
+						aria-label="Deutsch"
+						aria-current={language === 'de' ? 'page' : undefined}
+					>
+						DE
+					</a>
+					<span aria-hidden="true">/</span>
+					<a
+						href={language === 'en' ? Astro.url.pathname : alternatePath}
+						lang="en"
+						aria-label="English"
+						aria-current={language === 'en' ? 'page' : undefined}
+					>
+						EN
+					</a>
+				</div>
+			)
+		}
 	</nav>
 </header>
 
@@ -29,7 +75,8 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	nav {
 		display: grid;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: 1fr auto auto;
+		gap: clamp(0.75rem, 2vw, 2rem);
 		align-items: center;
 		width: min(calc(100% - 2 * var(--page-gutter)), var(--content-wide));
 		min-height: 5rem;
@@ -87,9 +134,29 @@ import HeaderLink from './HeaderLink.astro';
 		border-bottom-color: var(--color-focus);
 		color: var(--color-paper-light);
 	}
+	.language-switch {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		color: #7f8b87;
+		font-family: var(--font-meta);
+		font-size: 0.75rem;
+	}
+	.language-switch a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+		color: #cbd1ce;
+		text-decoration: none;
+	}
+	.language-switch a:hover,
+	.language-switch a[aria-current='page'] {
+		color: var(--color-paper-light);
+		font-weight: 700;
+	}
 	@media (max-width: 720px) {
 		nav {
-			grid-template-columns: 1fr;
+			grid-template-columns: 1fr auto;
 			gap: 0.3rem;
 			padding-block: 0.7rem 0.35rem;
 		}
@@ -105,7 +172,14 @@ import HeaderLink from './HeaderLink.astro';
 			display: none;
 		}
 		.internal-links {
+			grid-column: 1;
+			grid-row: 2;
 			justify-content: space-between;
+		}
+		.language-switch {
+			grid-column: 2;
+			grid-row: 2;
+			margin-left: 0.75rem;
 		}
 		.internal-links :global(a) {
 			padding-inline: 0;

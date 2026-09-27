@@ -1,0 +1,175 @@
+---
+import { SITE_TITLE } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+	language?: 'de' | 'en';
+}
+
+const { language = 'de' } = Astro.props;
+const en = language === 'en';
+const feedPath = en ? 'en/rss.xml' : 'rss.xml';
+const feedUrl = new URL(feedPath, Astro.site ?? Astro.url.origin);
+---
+
+<BaseLayout
+	title={`${en ? 'Follow via RSS' : 'Per RSS folgen'} · ${SITE_TITLE}`}
+	description={en
+		? 'Follow new Chasan Travels stories for free with RSS.'
+		: 'Neue Beiträge von Chasan Travels kostenlos und unabhängig per RSS abonnieren.'}
+>
+	<main id="main-content" class="rss-page">
+		<header>
+			<p class="eyebrow">{en ? 'Stay in the loop' : 'Auf dem Laufenden bleiben'}</p>
+			<h1>{en ? 'New stories via RSS.' : 'Neue Geschichten per RSS.'}</h1>
+			<p class="introduction">
+				{
+					en
+						? 'With RSS, new stories appear automatically in your feed reader. A feed reader is an app that collects updates from your favorite websites in one place. No account or newsletter needed.'
+						: 'Mit RSS erscheinen neue Beiträge automatisch in deinem Feedreader. Ein Feedreader ist eine App, die neue Beiträge von verschiedenen Websites an einem Ort sammelt. Du brauchst dafür weder ein Konto noch einen Newsletter.'
+				}
+			</p>
+		</header>
+
+		<section aria-labelledby="instructions-heading">
+			<p class="step-number" aria-hidden="true">01–03</p>
+			<div>
+				<h2 id="instructions-heading">{en ? 'How to subscribe' : 'So abonnierst du den Blog'}</h2>
+				<ol>
+					<li>
+						{en ? 'Open a feed reader of your choice.' : 'Öffne einen Feedreader deiner Wahl.'}
+					</li>
+					<li>
+						{
+							en
+								? 'Choose “Add feed” or “Subscribe”.'
+								: 'Wähle dort „Feed hinzufügen“ oder „Abonnieren“.'
+						}
+					</li>
+					<li>
+						{en ? 'Paste the feed address below.' : 'Füge die unten stehende Feed-Adresse ein.'}
+					</li>
+				</ol>
+				<div class="feed-address">
+					<p>{en ? 'Feed address' : 'Feed-Adresse'}</p>
+					<code>{feedUrl.href}</code>
+				</div>
+				<a class="feed-link" href={en ? '/en/rss.xml' : '/rss.xml'}>
+					{en ? 'Open RSS feed' : 'RSS-Feed öffnen'}
+					<span aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</section>
+
+		<aside>
+			<p>
+				<strong>{en ? 'Good to know.' : 'Gut zu wissen.'}</strong>
+				{
+					en
+						? 'Only published English stories appear in this feed. Drafts stay private.'
+						: 'Im Feed erscheinen nur veröffentlichte Beiträge. Entwürfe bleiben privat.'
+				}
+			</p>
+		</aside>
+	</main>
+</BaseLayout>
+
+<style>
+	.rss-page {
+		width: min(calc(100% - 2 * var(--page-gutter)), var(--content-wide));
+		margin-inline: auto;
+		padding-block: clamp(4rem, 9vw, 8rem);
+	}
+	header {
+		border-bottom: 1px solid var(--color-border);
+		padding-bottom: clamp(3rem, 7vw, 6rem);
+	}
+	h1 {
+		max-width: 13ch;
+		margin-top: 1.25rem;
+		font-size: clamp(3rem, 8vw, 7rem);
+		letter-spacing: -0.055em;
+		line-height: 0.95;
+	}
+	.introduction {
+		max-width: 42rem;
+		margin: 2rem 0 0;
+		color: var(--color-text-muted);
+		font-size: clamp(1.1rem, 2vw, 1.3rem);
+	}
+	section {
+		display: grid;
+		grid-template-columns: minmax(8rem, 0.55fr) minmax(18rem, 1.4fr);
+		gap: clamp(2rem, 7vw, 7rem);
+		padding-block: clamp(3rem, 8vw, 7rem);
+	}
+	.step-number {
+		margin: 0;
+		color: #b9b2a6;
+		font-family: var(--font-display);
+		font-size: clamp(3.5rem, 8vw, 6rem);
+		line-height: 0.8;
+	}
+	h2 {
+		font-size: clamp(2rem, 4vw, 3.2rem);
+	}
+	ol {
+		margin-block: 1.75rem 2.5rem;
+		padding-left: 1.35rem;
+	}
+	li {
+		margin-bottom: 0.75rem;
+	}
+	.feed-address {
+		border-block: 1px solid var(--color-border);
+		padding-block: 1.25rem;
+	}
+	.feed-address p {
+		margin-bottom: 0.4rem;
+		color: var(--color-text-muted);
+		font-family: var(--font-meta);
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+	.feed-address code {
+		display: block;
+		padding: 0;
+		background: transparent;
+		word-break: break-all;
+	}
+	.feed-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		min-height: 2.75rem;
+		margin-top: 1.5rem;
+		font-weight: 700;
+	}
+	aside {
+		border-top: 1px solid var(--color-border);
+		padding-top: 1.5rem;
+		color: var(--color-text-muted);
+		font-size: 0.9rem;
+	}
+	aside p {
+		max-width: 48rem;
+		margin: 0;
+	}
+	aside strong {
+		color: var(--color-text);
+		font-family: var(--font-meta);
+		font-size: 0.72rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+	@media (max-width: 700px) {
+		section {
+			grid-template-columns: 1fr;
+		}
+		.step-number {
+			display: none;
+		}
+	}
+</style>

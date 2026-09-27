@@ -12,6 +12,7 @@ const blog = defineCollection({
 				pubDate: z.coerce.date(),
 				updatedDate: z.coerce.date().optional(),
 				location: z.string().trim().min(1).optional(),
+				language: z.enum(['de', 'en']).default('de'),
 				tags: z.array(z.string().trim().min(1)).default([]),
 				draft: z.boolean().default(false),
 				heroImage: image().optional(),

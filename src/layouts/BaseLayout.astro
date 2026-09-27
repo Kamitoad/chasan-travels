@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { alternateLanguagePath, languageFromPath } from '../lib/i18n';
 
 interface Props {
 	title: string;
@@ -11,17 +12,27 @@ interface Props {
 }
 
 const { title, description, image } = Astro.props;
+const language = languageFromPath(Astro.url.pathname);
+const alternatePath = alternateLanguagePath(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang={language}>
 	<head>
-		<BaseHead title={title} description={description} image={image} />
+		<BaseHead
+			title={title}
+			description={description}
+			image={image}
+			language={language}
+			alternatePath={alternatePath}
+		/>
 	</head>
 	<body>
-		<a class="skip-link" href="#main-content">Zum Inhalt springen</a>
-		<Header />
+		<a class="skip-link" href="#main-content"
+			>{language === 'en' ? 'Skip to content' : 'Zum Inhalt springen'}</a
+		>
+		<Header language={language} alternatePath={alternatePath} />
 		<slot />
-		<Footer />
+		<Footer language={language} />
 	</body>
 </html>

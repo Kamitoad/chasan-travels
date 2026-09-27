@@ -1,33 +1,43 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+	language?: 'de' | 'en';
+}
+
+const { language = 'de' } = Astro.props;
+const en = language === 'en';
 ---
 
 <BaseLayout
-	title="Bildnachweise · Chasan Moustafa"
-	description="Quellen und Lizenzen der verwendeten Bilder."
+	title={en ? 'Photo credits · Chasan Moustafa' : 'Bildnachweise · Chasan Moustafa'}
+	description={en
+		? 'Information about the photos used on Chasan Travels.'
+		: 'Quellen und Lizenzen der verwendeten Bilder.'}
 >
 	<main id="main-content" class="credits">
 		<header>
-			<p class="eyebrow">Transparenz</p>
-			<h1>Bildnachweise</h1>
-			<p>Bilder ohne eigenen Urhebervermerk werden auf dieser Seite vollständig zugeordnet.</p>
+			<p class="eyebrow">{en ? 'Transparency' : 'Transparenz'}</p>
+			<h1>{en ? 'Photo credits' : 'Bildnachweise'}</h1>
+			<p>
+				{
+					en
+						? 'The photos currently published on this website are my own.'
+						: 'Die derzeit auf dieser Website veröffentlichten Fotos sind eigene Aufnahmen.'
+				}
+			</p>
 		</header>
 
-		<section aria-labelledby="vancouver-photo">
+		<section aria-labelledby="photo-credits">
 			<p class="number">01</p>
 			<div>
-				<h2 id="vancouver-photo">Vancouver Harbour</h2>
+				<h2 id="photo-credits">{en ? 'My own photos' : 'Eigene Fotos'}</h2>
 				<p>
-					Foto von <a
-						href="https://commons.wikimedia.org/wiki/File:Vancouver_harbour_skyline_(44723845851).jpg"
-						lang="en">dronepicr</a
-					>. Veröffentlicht unter <a href="https://creativecommons.org/licenses/by/2.0/deed.de"
-						>CC BY 2.0</a
-					>.
-				</p>
-				<p>
-					Die lokale Datei wurde für die Webdarstellung komprimiert. Nicht sichtbare Metadaten
-					wurden entfernt.
+					{
+						en
+							? 'The photographs in the travel stories and on the home page were taken by Chasan Moustafa. Individual captions provide context for each image.'
+							: 'Die Fotografien in den Reisebeiträgen und auf der Startseite stammen von Chasan Moustafa. Bildunterschriften geben zusätzliche Informationen zu den einzelnen Aufnahmen.'
+					}
 				</p>
 			</div>
 		</section>

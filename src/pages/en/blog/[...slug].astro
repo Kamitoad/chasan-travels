@@ -1,15 +1,16 @@
 ---
 import { type CollectionEntry, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { getVisiblePosts } from '../../lib/posts';
+import BlogPost from '../../../layouts/BlogPost.astro';
+import { getVisiblePosts } from '../../../lib/posts';
 
 export async function getStaticPaths() {
-	const posts = await getVisiblePosts('de');
+	const posts = await getVisiblePosts('en');
 	return posts.map((post, index) => ({
-		params: { slug: post.id },
+		params: { slug: post.id.replace(/^en\//, '') },
 		props: { post, entryNumber: index + 1 },
 	}));
 }
+
 interface Props {
 	post: CollectionEntry<'blog'>;
 	entryNumber: number;

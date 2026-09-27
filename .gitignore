@@ -21,6 +21,7 @@ pnpm-debug.log*
 # Local-only drafts and demo assets
 /src/content/blog/bildprobe.md
 /src/content/blog/willkommen.md
+/src/content/blog/mein-erster-tag-in-kanada.md
 /src/assets/photos/stanley-park.jpg
 /src/assets/photos/vancouver-harbour.jpg
 /src/assets/photos/meine-ankunft/20260903_223056.jpg

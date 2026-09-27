@@ -2,21 +2,34 @@
 import { Image } from 'astro:assets';
 import calgaryAirport from '../assets/photos/calgary-airport.jpg';
 import PostPreview from '../components/PostPreview.astro';
-import { CURRENT_CHAPTER, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { CURRENT_CHAPTER, SITE_DESCRIPTION, SITE_DESCRIPTION_EN, SITE_TITLE } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getVisiblePosts } from '../lib/posts';
+import { getVisiblePosts, postUrl, type Language } from '../lib/posts';
 
-const posts = await getVisiblePosts();
+interface Props {
+	language?: Language;
+}
+
+const { language = 'de' } = Astro.props;
+const en = language === 'en';
+const prefix = en ? '/en' : '';
+const posts = await getVisiblePosts(language);
 const latestPost = posts[0];
 ---
 
-<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} image={calgaryAirport}>
+<BaseLayout
+	title={SITE_TITLE}
+	description={en ? SITE_DESCRIPTION_EN : SITE_DESCRIPTION}
+	image={calgaryAirport}
+>
 	<main id="main-content">
 		<figure class="cover">
 			<Image
 				class="cover-image"
 				src={calgaryAirport}
-				alt="Sonnenlicht bricht durch dunkle Wolken über dem Vorfeld des Flughafens Calgary"
+				alt={en
+					? 'Sunlight breaks through dark clouds above the apron at Calgary Airport'
+					: 'Sonnenlicht bricht durch dunkle Wolken über dem Vorfeld des Flughafens Calgary'}
 				widths={[640, 960, 1440, 1920, 2400]}
 				sizes="100vw"
 				loading="eager"
@@ -25,31 +38,50 @@ const latestPost = posts[0];
 			<div class="cover-shade" aria-hidden="true"></div>
 			<div class="cover-content">
 				<p class="cover-kicker">
-					Kapitel {CURRENT_CHAPTER.number} · {CURRENT_CHAPTER.location} · {CURRENT_CHAPTER.period}
+					{en ? 'Chapter' : 'Kapitel'}
+					{CURRENT_CHAPTER.number} · {CURRENT_CHAPTER.location} · {CURRENT_CHAPTER.period}
 				</p>
-				<h1>{CURRENT_CHAPTER.title}</h1>
-				<p class="byline">Meine erste internationale Reise, ein Semester in Vancouver</p>
-				<a class="cover-link" href="#journal">Zum Journal <span aria-hidden="true">↓</span></a>
+				<h1>{en ? 'Westward' : CURRENT_CHAPTER.title}</h1>
+				<p class="byline">
+					{
+						en
+							? 'My first international journey, a semester in Vancouver'
+							: 'Meine erste internationale Reise, ein Semester in Vancouver'
+					}
+				</p>
+				<a class="cover-link" href="#journal"
+					>{en ? 'Explore the journal' : 'Zum Journal'} <span aria-hidden="true">↓</span></a
+				>
 			</div>
-			<figcaption>Eigenes Foto · Flughafen Calgary</figcaption>
+			<figcaption>
+				{en ? 'My own photo · Calgary Airport' : 'Eigenes Foto · Flughafen Calgary'}
+			</figcaption>
 		</figure>
 
 		<div class="page-shell">
 			<section class="introduction" aria-labelledby="introduction-heading">
-				<p class="eyebrow">Aktuelles Kapitel</p>
+				<p class="eyebrow">{en ? 'Current chapter' : 'Aktuelles Kapitel'}</p>
 				<div>
-					<h2 id="introduction-heading">Ein Semester zwischen Campus, Küste und Alltag.</h2>
+					<h2 id="introduction-heading">
+						{
+							en
+								? 'A semester between campus, coast and everyday life.'
+								: 'Ein Semester zwischen Campus, Küste und Alltag.'
+						}
+					</h2>
 					<p>
-						Westwärts ist das erste Kapitel dieses Reiseblogs. Hier sammle ich persönliche
-						Beobachtungen, Bilder und Geschichten aus Vancouver. Weitere Reisen können später
-						dazukommen, ohne dass die Seite neu gedacht werden muss.
+						{
+							en
+								? 'Westward is the first chapter of this travel blog. Here I collect personal observations, photos and stories from Vancouver. Other journeys may follow as the story grows.'
+								: 'Westwärts ist das erste Kapitel dieses Reiseblogs. Hier sammle ich persönliche Beobachtungen, Bilder und Geschichten aus Vancouver. Weitere Reisen können später dazukommen, ohne dass die Seite neu gedacht werden muss.'
+						}
 					</p>
 				</div>
 			</section>
 
 			<section class="latest" aria-labelledby="latest-heading">
 				<div class="latest-label">
-					<p class="eyebrow">Neueste Notiz</p>
+					<p class="eyebrow">{en ? 'Latest story' : 'Neueste Notiz'}</p>
 					<p class="entry-number" aria-hidden="true">01</p>
 				</div>
 				{
@@ -57,18 +89,30 @@ const latestPost = posts[0];
 						<div class="latest-story">
 							<p class="latest-meta">
 								{latestPost.data.location ?? 'Vancouver, BC'} ·{' '}
-								{latestPost.data.draft ? 'Entwurf' : 'Veröffentlicht'}
+								{latestPost.data.draft
+									? en
+										? 'Draft'
+										: 'Entwurf'
+									: en
+										? 'Published'
+										: 'Veröffentlicht'}
 							</p>
 							<h2 id="latest-heading">{latestPost.data.title}</h2>
 							<p>{latestPost.data.description}</p>
-							<a href={`/blog/${latestPost.id}/`}>
-								Notiz lesen <span aria-hidden="true">↗</span>
+							<a href={postUrl(latestPost.id, language)}>
+								{en ? 'Read the story' : 'Notiz lesen'} <span aria-hidden="true">↗</span>
 							</a>
 						</div>
 					) : (
 						<div class="latest-story">
-							<h2 id="latest-heading">Die erste Notiz ist unterwegs.</h2>
-							<p>Nach der Ankunft beginnt hier das öffentliche Journal.</p>
+							<h2 id="latest-heading">
+								{en ? 'The first story is on its way.' : 'Die erste Notiz ist unterwegs.'}
+							</h2>
+							<p>
+								{en
+									? 'The public journal begins after arrival.'
+									: 'Nach der Ankunft beginnt hier das öffentliche Journal.'}
+							</p>
 						</div>
 					)
 				}
@@ -76,19 +120,23 @@ const latestPost = posts[0];
 
 			<section id="journal" class="journal" aria-labelledby="journal-heading">
 				<div class="section-heading">
-					<p class="eyebrow">Aus diesem Kapitel</p>
+					<p class="eyebrow">{en ? 'From this chapter' : 'Aus diesem Kapitel'}</p>
 					<h2 id="journal-heading">Journal</h2>
-					<a href="/blog">Alle Einträge</a>
+					<a href={`${prefix}/blog`}>{en ? 'All entries' : 'Alle Einträge'}</a>
 				</div>
 				{
 					posts.length > 0 ? (
 						<div class="post-list">
 							{posts.slice(0, 4).map((post, index) => (
-								<PostPreview post={post} index={index} />
+								<PostPreview post={post} index={index} language={language} />
 							))}
 						</div>
 					) : (
-						<p class="empty-state">Noch ist hier alles ruhig. Der erste Beitrag folgt bald.</p>
+						<p class="empty-state">
+							{en
+								? 'It is still quiet here. The first story will arrive soon.'
+								: 'Noch ist hier alles ruhig. Der erste Beitrag folgt bald.'}
+						</p>
 					)
 				}
 			</section>
@@ -97,16 +145,19 @@ const latestPost = posts[0];
 		<section class="chapters" aria-labelledby="chapters-heading">
 			<div class="chapters-inner">
 				<div class="chapters-heading">
-					<p class="eyebrow">Reisen</p>
-					<h2 id="chapters-heading">Kapitel</h2>
+					<p class="eyebrow">{en ? 'Journeys' : 'Reisen'}</p>
+					<h2 id="chapters-heading">{en ? 'Chapters' : 'Kapitel'}</h2>
 				</div>
 				<article class="chapter-entry">
 					<p class="chapter-number">{CURRENT_CHAPTER.number}</p>
 					<div>
-						<h3>{CURRENT_CHAPTER.title}</h3>
+						<h3>{en ? 'Westward' : CURRENT_CHAPTER.title}</h3>
 						<p>{CURRENT_CHAPTER.location} · {CURRENT_CHAPTER.period}</p>
 					</div>
-					<a href="/blog">Aktuelles Kapitel öffnen <span aria-hidden="true">↗</span></a>
+					<a href={`${prefix}/blog`}
+						>{en ? 'Open current chapter' : 'Aktuelles Kapitel öffnen'}
+						<span aria-hidden="true">↗</span></a
+					>
 				</article>
 			</div>
 		</section>

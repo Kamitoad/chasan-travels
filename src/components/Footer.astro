@@ -1,22 +1,64 @@
 ---
 import { SITE_AUTHOR, SITE_TITLE } from '../consts';
+import { legalDetails } from '../lib/legal';
+import type { Language } from '../lib/posts';
+
+interface Props {
+	language?: Language;
+}
+
+const { language = 'de' } = Astro.props;
+const en = language === 'en';
+const prefix = en ? '/en' : '';
 
 const today = new Date();
 ---
 
 <footer>
+	<section class="contact-invitation" aria-labelledby="contact-heading">
+		<p class="contact-label">{en ? 'Thoughts & ideas' : 'Gedanken & Ideen'}</p>
+		<div>
+			<h2 id="contact-heading">
+				{en ? 'Want to share something?' : 'Du möchtest etwas mit mir teilen?'}
+			</h2>
+			<p>
+				{
+					en
+						? 'Have a suggestion, an idea, or just a note for me? I would love to hear from you.'
+						: 'Wenn du eine Anregung, eine Idee oder einfach eine Nachricht für mich hast, freue ich mich, von dir zu hören.'
+				}
+			</p>
+			<div class="contact-links">
+				<a href="https://www.instagram.com/kamivantoad/" rel="me external">
+					{en ? 'Message me on Instagram' : 'Auf Instagram schreiben'}
+					<span aria-hidden="true">↗</span>
+				</a>
+				<a href={`mailto:${legalDetails.email}`}>{legalDetails.email}</a>
+			</div>
+		</div>
+	</section>
 	<div class="footer-content">
 		<div>
 			<p class="wordmark">{SITE_TITLE}</p>
 			<p>&copy; {today.getFullYear()} {SITE_AUTHOR}</p>
 		</div>
-		<nav aria-label="Fußnavigation">
-			<a href="/blog">Journal</a>
-			<a href="/about">Über</a>
-			<a href="/credits">Bildnachweise</a>
-			<a href="/rss.xml">RSS Feed</a>
-			<a href="/impressum">Impressum</a>
-			<a href="/datenschutz">Datenschutz</a>
+		<nav aria-label={en ? 'Footer navigation' : 'Fußnavigation'}>
+			<div class="link-group" role="group" aria-labelledby="footer-discover">
+				<p id="footer-discover" class="group-label">{en ? 'Explore' : 'Entdecken'}</p>
+				<a href={`${prefix}/blog`}>Journal</a>
+				<a href={`${prefix}/about`}>{en ? 'About' : 'Über'}</a>
+			</div>
+			<div class="link-group" role="group" aria-labelledby="footer-follow">
+				<p id="footer-follow" class="group-label">{en ? 'Follow' : 'Folgen'}</p>
+				<a href="https://www.instagram.com/kamivantoad/" rel="me external">Instagram</a>
+				<a href={`${prefix}/rss`}>{en ? 'Follow via RSS' : 'Per RSS folgen'}</a>
+			</div>
+			<div class="link-group" role="group" aria-labelledby="footer-legal">
+				<p id="footer-legal" class="group-label">{en ? 'Information' : 'Hinweise'}</p>
+				<a href={`${prefix}/credits`}>{en ? 'Photo credits' : 'Bildnachweise'}</a>
+				<a href="/impressum">{en ? 'Legal notice (DE)' : 'Impressum'}</a>
+				<a href="/datenschutz">{en ? 'Privacy policy (DE)' : 'Datenschutz'}</a>
+			</div>
 		</nav>
 	</div>
 </footer>
@@ -29,12 +71,50 @@ const today = new Date();
 		color: #abb5b1;
 		font-size: 0.9rem;
 	}
-	.footer-content {
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
+	.contact-invitation {
+		display: grid;
+		grid-template-columns: minmax(10rem, 0.65fr) minmax(18rem, 1.6fr);
+		gap: clamp(2rem, 6vw, 6rem);
 		width: min(100%, var(--content-wide));
 		margin-inline: auto;
+		border-bottom: 1px solid var(--color-border-dark);
+		padding-block: 1rem clamp(3rem, 7vw, 5rem);
+	}
+	.contact-label {
+		color: var(--color-focus);
+		font-family: var(--font-meta);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+	.contact-invitation h2 {
+		max-width: 17ch;
+		color: var(--color-paper-light);
+		font-size: clamp(2rem, 4vw, 3.5rem);
+	}
+	.contact-invitation h2 + p {
+		max-width: 43rem;
+		margin-block: 1rem 1.5rem;
+		color: #abb5b1;
+		font-size: 1rem;
+	}
+	.contact-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 2rem;
+	}
+	.contact-links a {
+		min-height: 2.75rem;
+		font-weight: 700;
+	}
+	.footer-content {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: clamp(2rem, 6vw, 6rem);
+		width: min(100%, var(--content-wide));
+		margin: 3rem auto 0;
 	}
 	p {
 		margin: 0;
@@ -46,26 +126,45 @@ const today = new Date();
 		font-size: 1.75rem;
 	}
 	nav {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(8rem, auto));
+		gap: clamp(1.5rem, 4vw, 3.5rem);
+	}
+	.link-group {
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: flex-end;
-		gap: 1.5rem;
+		align-items: flex-start;
+		flex-direction: column;
+	}
+	.group-label {
+		margin-bottom: 0.6rem;
+		color: #7f8b87;
+		font-family: var(--font-meta);
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 	}
 	a {
 		display: inline-flex;
 		align-items: center;
-		min-height: 2.75rem;
+		min-height: 2.4rem;
 		color: var(--color-paper-light);
 	}
-	@media (max-width: 520px) {
+	@media (max-width: 760px) {
+		.contact-invitation {
+			grid-template-columns: 1fr;
+		}
 		.footer-content {
-			align-items: flex-start;
 			flex-direction: column;
-			gap: 1.5rem;
 		}
 		nav {
-			justify-content: flex-start;
-			gap: 0.5rem 1.5rem;
+			width: 100%;
+		}
+	}
+	@media (max-width: 520px) {
+		nav {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 1.5rem;
 		}
 	}
 </style>

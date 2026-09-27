@@ -1,35 +1,55 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+	language?: 'de' | 'en';
+}
+
+const { language = 'de' } = Astro.props;
+const en = language === 'en';
 ---
 
 <BaseLayout
-	title="Über mich · Chasan Moustafa"
-	description="Über Chasan Moustafa und seine persönlichen Reisegeschichten."
+	title={en ? 'About me · Chasan Moustafa' : 'Über mich · Chasan Moustafa'}
+	description={en
+		? 'About Chasan Moustafa and his personal travel stories.'
+		: 'Über Chasan Moustafa und seine persönlichen Reisegeschichten.'}
 >
 	<main id="main-content" class="about">
 		<header>
-			<p class="eyebrow">Über mich</p>
-			<h1>Hi, ich bin Chasan!</h1>
+			<p class="eyebrow">{en ? 'About me' : 'Über mich'}</p>
+			<h1>{en ? 'Hi, I’m Chasan!' : 'Hi, ich bin Chasan!'}</h1>
 		</header>
 		<div class="about-grid">
 			<p class="lead">
-				Ich bin gern unterwegs, probiere viel aus und habe meistens mehr Interessen als Zeit. Mal
-				lese ich, koche, programmiere, trainiere oder gehe einfach eine Runde spazieren.
+				{
+					en
+						? 'I love being on the move and trying new things, and I usually have more interests than time. Sometimes I read, cook, code, work out or simply go for a walk.'
+						: 'Ich bin gern unterwegs, probiere viel aus und habe meistens mehr Interessen als Zeit. Mal lese ich, koche, programmiere, trainiere oder gehe einfach eine Runde spazieren.'
+				}
 			</p>
 			<div class="body-copy">
-				<h2>Schön, dass du da bist.</h2>
+				<h2>{en ? 'I’m glad you’re here.' : 'Schön, dass du da bist.'}</h2>
 				<p>
-					Dieser Blog beginnt mit meiner ersten internationalen Reise nach Vancouver. Ich freue mich
-					auf neue Menschen, gutes Essen, beeindruckende Natur und auf alles, mit dem ich gerade
-					noch nicht rechne.
+					{
+						en
+							? 'This blog begins with my first international journey to Vancouver. I’m looking forward to meeting new people, trying good food, seeing remarkable landscapes and discovering everything I cannot yet imagine.'
+							: 'Dieser Blog beginnt mit meiner ersten internationalen Reise nach Vancouver. Ich freue mich auf neue Menschen, gutes Essen, beeindruckende Natur und auf alles, mit dem ich gerade noch nicht rechne.'
+					}
 				</p>
-				<a href="/blog">Zum Journal <span aria-hidden="true">→</span></a>
+				<a href={en ? '/en/blog' : '/blog'}
+					>{en ? 'Explore the journal' : 'Zum Journal'} <span aria-hidden="true">→</span></a
+				>
 			</div>
 		</div>
-		<aside class="site-note" aria-label="Technik der Website">
+		<aside class="site-note" aria-label={en ? 'About this website' : 'Technik der Website'}>
 			<p>
-				<strong>Kleine Randnotiz.</strong> Diese Website entsteht mit Astro. Die Beiträge schreibe ich
-				in Markdown.
+				<strong>{en ? 'A little side note.' : 'Kleine Randnotiz.'}</strong>
+				{
+					en
+						? 'This website is built with Astro. I write the posts in Markdown.'
+						: 'Diese Website entsteht mit Astro. Die Beiträge schreibe ich in Markdown.'
+				}
 			</p>
 		</aside>
 	</main>

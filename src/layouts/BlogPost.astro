@@ -26,24 +26,28 @@ const {
 	heroImageCreditUrl,
 	entryNumber,
 	readingMinutes,
+	language,
 } = Astro.props;
+const en = language === 'en';
+const blogPath = en ? '/en/blog/' : '/blog/';
 ---
 
 <BaseLayout title={`${title} · ${SITE_TITLE}`} description={description} image={heroImage}>
 	<main id="main-content">
 		<article>
 			<header class="post-header">
-				<a class="back-link" href="/blog"><span aria-hidden="true">←</span> Journal</a>
+				<a class="back-link" href={blogPath}><span aria-hidden="true">←</span> Journal</a>
 				<p class="entry-label">
-					{CURRENT_CHAPTER.title} · Eintrag {String(entryNumber).padStart(2, '0')}
+					{en ? 'Westward' : CURRENT_CHAPTER.title} · {en ? 'Entry' : 'Eintrag'}
+					{String(entryNumber).padStart(2, '0')}
 				</p>
 				<h1>{title}</h1>
 				<p class="description">{description}</p>
 				<div class="meta">
-					<span><FormattedDate date={pubDate} /></span>
+					<span><FormattedDate date={pubDate} language={language} /></span>
 					{location && <span>{location}</span>}
-					<span>{readingMinutes} Min. Lesezeit</span>
-					{draft && <strong>Entwurf · nicht öffentlich</strong>}
+					<span>{readingMinutes} {en ? 'min read' : 'Min. Lesezeit'}</span>
+					{draft && <strong>{en ? 'Draft · not public' : 'Entwurf · nicht öffentlich'}</strong>}
 				</div>
 			</header>
 
@@ -76,7 +80,8 @@ const {
 				{
 					updatedDate && (
 						<p class="last-updated-on">
-							Zuletzt aktualisiert am <FormattedDate date={updatedDate} />
+							{en ? 'Last updated on' : 'Zuletzt aktualisiert am'}{' '}
+							<FormattedDate date={updatedDate} language={language} />
 						</p>
 					)
 				}
@@ -84,10 +89,10 @@ const {
 
 			<footer class="post-footer">
 				<div>
-					<p class="eyebrow">Abgelegt unter</p>
+					<p class="eyebrow">{en ? 'Filed under' : 'Abgelegt unter'}</p>
 					{
 						tags.length > 0 ? (
-							<ul aria-label="Schlagwörter">
+							<ul aria-label={en ? 'Tags' : 'Schlagwörter'}>
 								{tags.map((tag) => (
 									<li>#{tag}</li>
 								))}
@@ -97,7 +102,9 @@ const {
 						)
 					}
 				</div>
-				<a href="/blog">Alle Einträge <span aria-hidden="true">→</span></a>
+				<a href={blogPath}
+					>{en ? 'All entries' : 'Alle Einträge'} <span aria-hidden="true">→</span></a
+				>
 			</footer>
 		</article>
 	</main>

@@ -2,33 +2,51 @@
 import PostPreview from '../../components/PostPreview.astro';
 import { CURRENT_CHAPTER, SITE_TITLE } from '../../consts';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getVisiblePosts } from '../../lib/posts';
+import { getVisiblePosts, type Language } from '../../lib/posts';
 
-const posts = await getVisiblePosts();
+interface Props {
+	language?: Language;
+}
+
+const { language = 'de' } = Astro.props;
+const en = language === 'en';
+const posts = await getVisiblePosts(language);
 ---
 
 <BaseLayout
 	title={`Journal · ${SITE_TITLE}`}
-	description="Alle Geschichten und Notizen aus Chasan Moustafas Auslandssemester in Vancouver."
+	description={en
+		? 'Stories and notes from Chasan Moustafa’s semester abroad in Vancouver.'
+		: 'Alle Geschichten und Notizen aus Chasan Moustafas Auslandssemester in Vancouver.'}
 >
 	<main id="main-content" class="archive">
 		<header>
-			<p class="eyebrow">Kapitel {CURRENT_CHAPTER.number} · {CURRENT_CHAPTER.title}</p>
+			<p class="eyebrow">
+				{en ? 'Chapter' : 'Kapitel'}
+				{CURRENT_CHAPTER.number} · {en ? 'Westward' : CURRENT_CHAPTER.title}
+			</p>
 			<h1>Journal</h1>
 			<p>
-				Chronologisch gesammelt: Ankommen, Campusleben, Stadt, Natur und die kleinen Dinge
-				dazwischen.
+				{
+					en
+						? 'In order: arriving, campus life, the city, nature and all the small moments in between.'
+						: 'Chronologisch gesammelt: Ankommen, Campusleben, Stadt, Natur und die kleinen Dinge dazwischen.'
+				}
 			</p>
 		</header>
 		{
 			posts.length > 0 ? (
-				<div class="post-list" aria-label="Journal-Einträge">
+				<div class="post-list" aria-label={en ? 'Journal entries' : 'Journal-Einträge'}>
 					{posts.map((post, index) => (
-						<PostPreview post={post} index={index} />
+						<PostPreview post={post} index={index} language={language} />
 					))}
 				</div>
 			) : (
-				<p class="empty-state">Noch ist hier alles ruhig. Der erste Beitrag folgt bald.</p>
+				<p class="empty-state">
+					{en
+						? 'It is still quiet here. The first story will arrive soon.'
+						: 'Noch ist hier alles ruhig. Der erste Beitrag folgt bald.'}
+				</p>
 			)
 		}
 	</main>

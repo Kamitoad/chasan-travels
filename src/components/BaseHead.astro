@@ -8,10 +8,13 @@ interface Props {
 	title: string;
 	description: string;
 	image?: ImageMetadata;
+	language?: 'de' | 'en';
+	alternatePath?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
-const { title, description, image } = Astro.props;
+const { title, description, image, language = 'de', alternatePath } = Astro.props;
+const feedPath = language === 'en' ? 'en/rss.xml' : 'rss.xml';
 ---
 
 <meta charset="utf-8" />
@@ -26,13 +29,22 @@ const { title, description, image } = Astro.props;
 	rel="alternate"
 	type="application/rss+xml"
 	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site ?? Astro.url.origin)}
+	href={new URL(feedPath, Astro.site ?? Astro.url.origin)}
 />
 <meta name="generator" content={Astro.generator} />
 
 <Font cssVariable="--font-atkinson" preload />
 
 <link rel="canonical" href={canonicalURL} />
+{
+	alternatePath && (
+		<link
+			rel="alternate"
+			hreflang={language === 'en' ? 'de' : 'en'}
+			href={new URL(alternatePath, Astro.site ?? Astro.url.origin)}
+		/>
+	)
+}
 
 <title>{title}</title>
 <meta name="description" content={description} />

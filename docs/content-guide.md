@@ -12,6 +12,25 @@ pnpm new-post "Meine erste Woche"
 Der neue Beitrag enthält immer `draft: true`. Entwürfe sind lokal sichtbar, werden aber weder in
 einem Produktions-Build noch im RSS-Feed veröffentlicht.
 
+## Deutsche und englische Beiträge
+
+Deutsch ist die Standardsprache. Deutsche Beiträge liegen direkt in `src/content/blog/` und
+behalten ihre bisherigen URLs unter `/blog/`. Englischsprachige Fassungen liegen mit demselben
+Dateinamen in `src/content/blog/en/` und erscheinen unter `/en/blog/`. Bei englischen Beiträgen
+steht `language: en` im Dateikopf. Die englische Übersetzung von `meine-ankunft.md` liegt zum
+Beispiel unter `src/content/blog/en/meine-ankunft.md`.
+
+`pnpm new-post` erstellt weiterhin einen deutschen Entwurf. Eine englische Fassung wird erst
+angelegt, wenn der deutsche Text bereit ist. Titel, Zusammenfassung, Schlagwörter, Alternativtexte,
+Bildunterschriften und Links müssen mitübersetzt beziehungsweise geprüft werden. Relative Bildpfade
+beginnen aus dem Unterordner `en/` mit `../../../assets/` statt `../../assets/`.
+
+Die Fassungen werden getrennt veröffentlicht: Beide behalten `draft: true`, bis Inhalt, Bilder,
+Rechte und Privatsphäre für die jeweilige Sprache geprüft wurden. Nur veröffentlichte deutsche
+Beiträge erscheinen im deutschen RSS-Feed; englische Beiträge erscheinen im Feed unter
+`/en/rss.xml`. Für jeden übersetzten Beitrag sollte die gleichnamige deutsche Fassung existieren,
+damit der Sprachwechsel zur entsprechenden Geschichte führt.
+
 ## Felder
 
 - `title`: klarer Titel
@@ -19,6 +38,7 @@ einem Produktions-Build noch im RSS-Feed veröffentlicht.
 - `pubDate`: Veröffentlichungsdatum im Format `YYYY-MM-DD`
 - `updatedDate`: optionales Änderungsdatum
 - `location`: optionaler, bewusst ungenauer Ort
+- `language`: `de` (Standard) oder `en`
 - `tags`: optionale Liste weniger hilfreicher Schlagwörter
 - `draft`: `true` für Entwürfe, `false` für öffentliche Beiträge
 - `heroImage`: optionales Titelbild relativ zur Beitragsdatei
