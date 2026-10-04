@@ -78,7 +78,7 @@ Um auf die andere Straßenseite zu kommen, drückte ich an der Ampel auf den Kno
 
 Tatsächlich. Es war die Ampel.
 
-Die Geräusche sind eine Orientierungshilfe für blinde und sehbehinderte Menschen. Bei solchen Ampeln in Vancouver steht der Kuckuck typischerweise für eine Querung in Nord-Süd-Richtung, während es in Ost-West-Richtung zwitschert. Die Stadt beschreibt diese unterschiedlichen Töne in ihren [Vorgaben für barrierefreie Fußgängersignale](https://bids.vancouver.ca/bidopp/EOI/documents/PS20120654-RFEOI.pdf).
+Die Geräusche sind eine Orientierungshilfe für blinde und sehbehinderte Menschen. Bei solchen Ampeln in Vancouver steht der Kuckuck typischerweise für eine Querung in Nord-Süd-Richtung, während es in Ost-West-Richtung zwitschert.
 
 Auch in Deutschland gibt es akustische Ampelsignale. Aber diese kleine Vogelwelt an einer Straßenkreuzung war für mich neu.
 
