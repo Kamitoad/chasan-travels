@@ -7,6 +7,7 @@ const translatedPaths = new Set([
 	'/rss/',
 	'/credits/',
 	'/blog/meine-ankunft/',
+	'/blog/mein-erster-tag-in-kanada/',
 ]);
 
 export function languageFromPath(pathname: string): Language {
