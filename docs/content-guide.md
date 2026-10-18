@@ -77,9 +77,11 @@ einen sinnvollen Alternativtext. Bilder, die nur dekorativ sind, sollten im Beit
 
 ## Schreibstil
 
-Öffentliche Texte verwenden kurze, direkte Sätze. Semikola, Gedankenstriche und dekorative
-Bindestriche werden vermieden. Zusammengesetzte Wörter werden ausgeschrieben, wenn das ohne
-unnatürliche Formulierungen möglich ist.
+Öffentliche Texte verwenden klare, natürliche Sätze. Zusammenhängende Gedanken stehen in flüssigen
+Absätzen aus meist mehreren Sätzen. Ein gutes Mittelmaß ist wichtig: weder viele kurzatmige
+Ein-Satz-Absätze noch lange Textblöcke. Kurze Einzelabsätze bleiben ein sparsames Stilmittel.
+Semikola, Gedankenstriche und dekorative Bindestriche werden vermieden. Zusammengesetzte Wörter
+werden ausgeschrieben, wenn das ohne unnatürliche Formulierungen möglich ist.
 
 Die Texte richten sich an Freunde und Familie, sollen aber auch ohne persönliches Vorwissen
 verständlich sein. Die Stimme ist neugierig, inspirierend und erstaunt. Humor darf vorkommen,
