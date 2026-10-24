@@ -2,6 +2,7 @@
 title: 'Mein erster Tag (in Kanada)'
 description: 'Ohne Frühstück und mobile Daten zur SFU: Zwischen einem Kuckuck an der Ampel, neuen Menschen und einem riesigen Campus beginnt mein Alltag in Kanada.'
 pubDate: 2026-10-04
+entryNumber: 2
 location: 'Vancouver, British Columbia'
 tags:
   - Vancouver

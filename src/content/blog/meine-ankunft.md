@@ -2,6 +2,7 @@
 title: 'Meine Ankunft'
 description: 'Von einer unerwarteten Rettung in Gießen über den Wolken bis zu den Lichtern Vancouvers: Der Beginn meines Auslandssemesters in Kanada.'
 pubDate: 2026-09-15
+entryNumber: 1
 location: 'Vancouver, British Columbia'
 tags:
   - Ankunft

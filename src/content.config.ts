@@ -10,6 +10,7 @@ const blog = defineCollection({
 				title: z.string().trim().min(1),
 				description: z.string().trim().min(1).max(160),
 				pubDate: z.coerce.date(),
+				entryNumber: z.number().int().positive().optional(),
 				updatedDate: z.coerce.date().optional(),
 				location: z.string().trim().min(1).optional(),
 				language: z.enum(['de', 'en']).default('de'),
@@ -22,6 +23,13 @@ const blog = defineCollection({
 				heroImageCreditUrl: z.url().optional(),
 			})
 			.superRefine((post, context) => {
+				if (!post.draft && post.entryNumber === undefined) {
+					context.addIssue({
+						code: 'custom',
+						path: ['entryNumber'],
+						message: 'Veröffentlichte Beiträge benötigen eine feste Beitragsnummer.',
+					});
+				}
 				if (post.heroImage && !post.heroImageAlt) {
 					context.addIssue({
 						code: 'custom',

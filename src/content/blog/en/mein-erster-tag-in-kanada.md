@@ -2,6 +2,7 @@
 title: 'My First Day (in Canada)'
 description: 'No breakfast, no mobile data and a bus to SFU: a cuckoo at the crossing, new people and a huge campus mark the start of my life in Canada.'
 pubDate: 2026-10-04
+entryNumber: 2
 location: 'Vancouver, British Columbia'
 language: en
 tags:

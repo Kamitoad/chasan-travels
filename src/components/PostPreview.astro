@@ -1,16 +1,15 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
-import { postUrl, type Language } from '../lib/posts';
+import { formatEntryNumber, postUrl, type Language } from '../lib/posts';
 
 interface Props {
 	post: CollectionEntry<'blog'>;
-	index: number;
 	language?: Language;
 }
 
-const { post, index, language = 'de' } = Astro.props;
-const entryNumber = String(index + 1).padStart(2, '0');
+const { post, language = 'de' } = Astro.props;
+const entryNumber = formatEntryNumber(post.data.entryNumber);
 const href = postUrl(post.id, language);
 ---
 

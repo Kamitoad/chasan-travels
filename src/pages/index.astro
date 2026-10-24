@@ -4,7 +4,7 @@ import calgaryAirport from '../assets/photos/calgary-airport.jpg';
 import PostPreview from '../components/PostPreview.astro';
 import { CURRENT_CHAPTER, SITE_DESCRIPTION, SITE_DESCRIPTION_EN, SITE_TITLE } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getVisiblePosts, postUrl, type Language } from '../lib/posts';
+import { formatEntryNumber, getVisiblePosts, postUrl, type Language } from '../lib/posts';
 
 interface Props {
 	language?: Language;
@@ -82,7 +82,9 @@ const latestPost = posts[0];
 			<section class="latest" aria-labelledby="latest-heading">
 				<div class="latest-label">
 					<p class="eyebrow">{en ? 'Latest story' : 'Neueste Notiz'}</p>
-					<p class="entry-number" aria-hidden="true">01</p>
+					<p class="entry-number" aria-hidden="true">
+						{formatEntryNumber(latestPost?.data.entryNumber)}
+					</p>
 				</div>
 				{
 					latestPost ? (
@@ -127,8 +129,8 @@ const latestPost = posts[0];
 				{
 					posts.length > 0 ? (
 						<div class="post-list">
-							{posts.slice(0, 4).map((post, index) => (
-								<PostPreview post={post} index={index} language={language} />
+							{posts.slice(0, 4).map((post) => (
+								<PostPreview post={post} language={language} />
 							))}
 						</div>
 					) : (

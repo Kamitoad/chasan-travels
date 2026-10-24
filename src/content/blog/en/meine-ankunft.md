@@ -2,6 +2,7 @@
 title: 'My Arrival'
 description: 'From an unexpected rescue in Giessen to the lights of Vancouver: the beginning of my semester abroad in Canada.'
 pubDate: 2026-09-15
+entryNumber: 1
 location: 'Vancouver, British Columbia'
 language: en
 tags:

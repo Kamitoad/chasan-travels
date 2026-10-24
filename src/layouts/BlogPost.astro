@@ -4,10 +4,10 @@ import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import { CURRENT_CHAPTER, SITE_TITLE } from '../consts';
 import BaseLayout from './BaseLayout.astro';
+import { formatEntryNumber } from '../lib/posts';
 
 type PostData = CollectionEntry<'blog'>['data'];
 interface Props extends PostData {
-	entryNumber: number;
 	readingMinutes: number;
 }
 
@@ -38,8 +38,8 @@ const blogPath = en ? '/en/blog/' : '/blog/';
 			<header class="post-header">
 				<a class="back-link" href={blogPath}><span aria-hidden="true">←</span> Journal</a>
 				<p class="entry-label">
-					{en ? 'Westward' : CURRENT_CHAPTER.title} · {en ? 'Entry' : 'Eintrag'}
-					{String(entryNumber).padStart(2, '0')}
+					{en ? 'Westward' : CURRENT_CHAPTER.title} · {en ? 'Entry' : 'Eintrag'}{' '}
+					{formatEntryNumber(entryNumber)}
 				</p>
 				<h1>{title}</h1>
 				<p class="description">{description}</p>

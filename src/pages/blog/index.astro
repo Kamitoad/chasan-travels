@@ -37,8 +37,8 @@ const posts = await getVisiblePosts(language);
 		{
 			posts.length > 0 ? (
 				<div class="post-list" aria-label={en ? 'Journal entries' : 'Journal-Einträge'}>
-					{posts.map((post, index) => (
-						<PostPreview post={post} index={index} language={language} />
+					{posts.map((post) => (
+						<PostPreview post={post} language={language} />
 					))}
 				</div>
 			) : (

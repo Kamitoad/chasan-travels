@@ -2,6 +2,7 @@
 title: 'My Grouse Grind'
 description: 'A spontaneous Grouse Grind hike with my roommates: around 800 metres of climbing, a few breathing breaks and a sunset worth waiting for.'
 pubDate: 2026-10-18
+entryNumber: 3
 location: 'Grouse Mountain, North Vancouver'
 language: en
 tags:

@@ -36,6 +36,8 @@ damit der Sprachwechsel zur entsprechenden Geschichte führt.
 - `title`: klarer Titel
 - `description`: Zusammenfassung mit höchstens 160 Zeichen
 - `pubDate`: Veröffentlichungsdatum im Format `YYYY-MM-DD`
+- `entryNumber`: feste positive ganze Beitragsnummer (z. B. `1` für die Anzeige `01`), vor der
+  Veröffentlichung erforderlich; bei noch nicht eingeplanten Entwürfen optional
 - `updatedDate`: optionales Änderungsdatum
 - `location`: optionaler, bewusst ungenauer Ort
 - `language`: `de` (Standard) oder `en`
@@ -46,6 +48,19 @@ damit der Sprachwechsel zur entsprechenden Geschichte führt.
 - `heroImageCaption`: optionale, kurze Bildunterschrift
 - `heroImageCredit`: optionaler sichtbarer Bildnachweis
 - `heroImageCreditUrl`: optionale URL zur Quelle oder Lizenz. Das Feld erfordert `heroImageCredit`.
+
+### Feste Beitragsnummern
+
+Die Nummer gehört zur Geschichte, nicht zu ihrer Position in einer Liste. Vergeben wird sie in
+chronologischer Veröffentlichungsreihenfolge: `1` für „Meine Ankunft“, `2` für „Mein erster Tag
+(in Kanada)“, `3` für „Mein Grouse Grind“ und `4` für „Mein japanisches Schiff“.
+Veröffentlichte Nummern bleiben unverändert. Neue Geschichten erhalten die nächste freie Nummer;
+lokale Testentwürfe ohne Nummer zeigen einen Gedankenstrich und verschieben keine anderen Beiträge.
+
+Übersetzungen übernehmen dieselbe `entryNumber` wie die deutsche Fassung, auch wenn sie später
+veröffentlicht werden. Unterschiedliche Nummern derselben Geschichte und doppelte Nummern für
+verschiedene Geschichten werden bei der Seitenerzeugung als Fehler gemeldet. Die Anzeige bleibt
+nach `pubDate` absteigend sortiert und ist unabhängig von der festen Nummer.
 
 Beispiel mit Bild:
 

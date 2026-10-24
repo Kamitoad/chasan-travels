@@ -2,6 +2,7 @@
 title: 'Mein Grouse Grind'
 description: 'Spontan mit meinen Mitbewohnern auf den Grouse Grind: rund 800 Höhenmeter, kurze Atempausen und ein Sonnenuntergang, der sich Zeit ließ.'
 pubDate: 2026-10-18
+entryNumber: 3
 location: 'Grouse Mountain, North Vancouver'
 tags:
   - Kanada
