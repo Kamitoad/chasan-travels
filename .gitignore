@@ -19,6 +19,7 @@ pnpm-debug.log*
 !.env.example
 
 # Local-only drafts and demo assets
+/src/assets/photos/mein-baden-powell-trail/
 /src/content/blog/bildprobe.md
 /src/content/blog/willkommen.md
 /src/assets/photos/stanley-park.jpg
